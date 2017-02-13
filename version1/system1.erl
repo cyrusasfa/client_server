@@ -8,9 +8,9 @@
 -export([start/0, peers/1]).
  
 start() ->  
-  List = lists:seq(1, 10),
-  Peers = peers(List),
-  [X ! {neighbours, Peers -- [X]} || X <- Peers],
+  Ps = lists:seq(1, 10),
+  Peers = peers(Ps),
+  [X ! {bind, lists:delete(X, Peers)} || X <- Peers],
   
   hd(Peers) ! hello.
 
